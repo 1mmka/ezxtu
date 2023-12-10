@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subrubric Posts</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 10px; 
+        }
+
+        .card {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin: 10px;
+            padding: 15px;
+            max-width: 150px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .card img {
+            max-width: 80%;
+            height: auto;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .card h2 {
+            margin: 0;
+            font-size: 18px;
+            color: #333;
+        }
+
+        .card p {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 15px; 
+        }
+
+        .card a {
+            display: block;
+            text-decoration: none;
+            color: #007BFF;
+            margin-top: 10px;
+            font-weight: bold; 
+        }
+
+        .card:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transform: scale(1.02);
+        }
+
+        .checked-liked {
+            font-size: 15px;
+            color: crimson;
+            padding: 15px;
+        }
+
+        .obya {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+        }
+        .back-button {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            padding: 15px;
+            background-color: #333;
+            color: #f4f4f4;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 30px;
+            text-decoration: none;
+          }
+          .back-button:hover {
+            background-color: #555;
+            color: #007BFF;
+          }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 class="obya">Мы нашли {{ subrubric_posts_counter }} объявлений</h1>
+    </header>
+
+    <div class="container">
+        {% for post in subrubric_posts %}
+            <div class="card">
+                <img src="{{ post.image.url }}" alt="{{ post.title }}">
+                <h2 style="font-size:10px;">{{ post.title }}</h2>
+                <a href="{% url 'subrubric-info' post.pk %}">Подробнее</a>
+
+                {% for liked_post in liked_posts %}
+                    {% if liked_post.user == request.user and liked_post.post == post %}
+                        <a href="{% url 'checked' post.pk %}">
+                            <button type="button" class="checked-liked">В Избранном</button>
+                        </a>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endfor %}
+    </div>
+    <a href="{% url 'home' %}" class="back-button">Вернуться назад</a>
+</body>
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ request.user.username }} Profile</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
+
+    header {
+      background-color: #333;
+      color: white;
+      padding: 10px;
+      text-align: center;
+    }
+
+    main {
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: white;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .ad-container {
+      border: 1px solid #ddd;
+      padding: 10px;
+      margin-bottom: 10px;
+      position: relative;
+    }
+
+    .ad-actions {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 8px 12px;
+      margin: 5px;
+      text-decoration: none;
+      color: white;
+      background-color: #333;
+      border: 1px solid #333;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .btn-create {
+      background-color: #4caf50;
+    }
+
+    .btn-favorites {
+      background-color: #2196f3;
+    }
+    .username-text {
+        position: fixed;
+        bottom: 43rem;
+        left: 5rem;
+        color: aqua;
+        font-size: 20px;
+    }
+    .back-button {
+        position: fixed;
+        top: 10px;
+        right: 10px;
+        padding: 15px;
+        background-color: #333;
+        color: #f4f4f4;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        font-size: 30px;
+        text-decoration: none;
+      }
+      .back-button:hover {
+        background-color: #555;
+        color: #007BFF;
+      }
+      .image-settings {
+        width: 100px;
+        height: 100px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+  </style>
+  <title>Объявления</title>
+</head>
+<body>
+  <header>
+    <h1>Объявления</h1>
+  </header>
+  <main>
+    {% for post in posts %}
+        {% if post.author.pk == request.user.pk %}
+        <div class="ad-container">
+            <h2>{{ post.title }}</h2>
+            <p>{{ post.content }}</p>
+            <img src="{{ post.image.url }}" alt="{{ post.title }}" class="image-settings">
+            <div class="ad-actions">
+                <a href="{% url 'update' post.pk %}" class="btn">Редактировать</a>
+                <a href="{% url 'delete-post' post.pk %}" class="btn">Удалить</a>
+            </div>
+        </div>
+        {% endif %}
+    {% endfor %}
+
+    <div>
+      <a href="{% url 'create' %}" class="btn btn-create">Создать объявление</a>
+      <a href="{% url 'view-announcements' request.user.pk %}" class="btn btn-favorites">Просмотреть избранные</a>
+    </div>
+
+  </main>
+
+
+  <div class="username-text">{{ request.user.username }}</div>
+  <a href="{% url 'home' %}" class="back-button">Вернуться назад</a>
+
+
+</body>
+</html>

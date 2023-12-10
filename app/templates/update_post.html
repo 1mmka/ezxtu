@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Изменить объявление</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+          }
+          
+          header {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 1em 0;
+          }
+          
+          main {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+          }
+          
+          form {
+            display: grid;
+            gap: 15px;
+          }
+          
+          label {
+            font-weight: bold;
+          }
+          
+          input, select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+          }
+          
+          button {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+          }
+          
+          button:hover {
+            background-color: #45a049;
+          }
+          
+    </style>
+</head>
+<body>
+
+  <header>
+    <h1>Изменить объявление</h1>
+  </header>
+
+  <main>
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+
+      <label for="title">Заголовок:</label>
+      {{ form.title }}
+
+      <label for="content">Описание:</label>
+      {{ form.content }}
+
+      <label for="price">Цена:</label>
+      {{ form.price }}
+
+      <label for="contact">Контакт:</label>
+      {{ form.contact }}
+
+      <label for="image">Изображение:</label>
+      {{ form.image }}
+
+      <label for="rubric">Категория:</label>
+      {{ form.rubric }}
+
+      <button type="submit">Сохранить изменения</button>
+    </form>
+  </main>
+
+</body>
+</html>

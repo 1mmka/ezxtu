@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post Detail Information</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .advert-details {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .advert-details img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+
+        h2, p {
+            margin: 0;
+            font-size: 18px;
+            color: #333;
+        }
+
+        p {
+            margin-bottom: 15px;
+            color: #555;
+        }
+
+        a {
+            display: inline-block;
+            text-decoration: none;
+            color: #007BFF;
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+        .btn {
+            font-size: 15px;
+            color: crimson;
+            padding: 15px;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-end;
+            align-items: flex-end;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Дополнительная информация</h1>
+    </header>
+
+    <div class="container">
+        <div class="advert-details">
+            <img src='{{ post.image.url }}' alt='{{ post.title }}'>
+            <h2>{{ post.title }}</h2>
+            <p>{{ post.content }}</p>
+            <p>Цена: {{ post.price }} $</p>
+            <p>Выставил на продажу: {{ post.author }}</p>
+            <p>Было опубликовано: {{ post.created_at }}</p>
+            <p>Контактный телефон: {{ post.contact }}</p>
+            <a href="{% url 'subrubric' subrubric_detail_id %}">Вернуться к списку</a>
+
+            <a href="{% url 'checked' post.pk %}">
+                <button type="button" class="btn">Добавить в избранное</button>
+            </a>
+        </div>
+    </div>
+</body>
+</html>

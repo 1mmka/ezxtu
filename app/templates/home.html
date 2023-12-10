@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
+
+    header {
+      background-color: #333;
+      color: #fff;
+      padding: 10px;
+      text-align: center;
+    }
+
+    .categories {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .category {
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      margin: 10px;
+      padding: 10px;
+      text-align: center;
+      transition: transform 0.3s ease-in-out;
+      max-width: 200px;
+      position: relative;
+    }
+
+    .category a {
+      text-decoration: none;
+      color: antiquewhite;
+    }
+
+    .category img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 5px;
+      margin-bottom: 10px;
+    }
+
+    .category h2 {
+      margin: 0;
+      font-size: 14px;
+    }
+
+    .subcategory-container {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      padding: 10px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      z-index: 1;
+    }
+
+    .subcategory-list {
+      max-height: 150px;
+      overflow-y: auto;
+    }
+
+    .subcategory {
+      margin: 0;
+      padding: 5px 0;
+      font-size: 12px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .subcategory a:hover {
+      color: orange;
+    }
+
+    .category:hover .subcategory-container {
+      display: block;
+    }
+
+    .category:hover {
+      transform: scale(1.05);
+    }
+
+    .exit-button {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      padding: 15px;
+      background-color: #333;
+      color: #f4f4f4;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 30px;
+      text-decoration: none;
+    }
+
+    .exit-button:hover {
+      background-color: #555;
+    }
+
+    .username-text {
+      position: fixed;
+      top: 2rem;
+      right: 100px; 
+      color: aqua;
+      font-size: 20px;
+    }
+  </style>
+  <title>Интернет Магазин</title>
+</head>
+<body>
+
+  <header>
+    <h1>Главная Страница</h1>
+  </header>
+
+  <div class="categories">
+    {% for category in categories %}
+      {% if category.parent is None %}
+        <div class="category">
+          <a href="{% url 'view-subrubrics' category.pk %}">
+            <img src="{{ category.image.url }}" alt="{{ category.name }}">
+            <h2>{{ category.name }}</h2>
+          </a>
+          <div class="subcategory-container">
+            <div class="subcategory-list">
+              {% for subcategory in subcategories %}
+                {% if subcategory.parent.pk == category.pk %}
+                  <p class="subcategory">
+                    <a href="{% url 'subrubric' subcategory.pk %}">{{ subcategory.name }}</a>
+                  </p>
+                {% endif %}
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+
+  <div class="username-text">
+    <a href="{% url 'user-profile' request.user.pk %}" style="text-decoration: none; color:aqua;">
+      {{ request.user.username }}
+    </a>
+  </div>
+  <a href="{% url 'logout' %}" class="exit-button">Exit</a>
+
+</body>
+</html>
